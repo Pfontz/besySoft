@@ -30,10 +30,8 @@ public class main{
 			//System.out.println(op);
 			switch(op) {
 				case("A"):
-					System.out.println("ha elegido opcion A");
 					System.out.println("ingrese nombre de producto a crear");
 					String prod = in.nextLine();
-					System.out.println(prod);
 					System.out.println(";");
 					System.out.println("ingrese precio");
 					String precio = in.nextLine();
@@ -49,20 +47,31 @@ public class main{
 					String cat = in.nextLine();
 					 try{
 				            char ch = cat.charAt(0);
-				            System.out.println(ch);
 					 }
 				     catch (Exception ex){
 				    	 ex.printStackTrace();
 				     }
-					 TiendaDeProductos.Product nuevo = new TiendaDeProductos.Product(211, prod, 23, 'A');
-					 T.storeProduct(nuevo);
-					 System.out.println(T.productSearch(prod).name);
+					 TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(211, prod, 23, 'A');
+					 T.storeProduct(nuevo_prod);
 					break;
-				case("B"):
-					System.out.println("ha elegido opcion B");
+				case("B"):		
+					System.out.println("ingrese nombre nuevo vendedor");
+					String vend = in.nextLine();
+					System.out.println(";");
+					System.out.println("ingrese remuneracion");
+					String incom = in.nextLine();
+					try{
+			            int income = Integer.parseInt(incom);				  
+					}
+				    catch (NumberFormatException ex){
+				    	ex.printStackTrace();
+				    }
+					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, 1234);					
 					break;
 				case("C"):
-					System.out.println("ha elegido opcion C");
+					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
+					System.out.println("buscar articulo (codigo, nombre)");
+					String articulo = in.nextLine();			
 					break;
 				case("D"):
 					System.out.println("ha elegido opcion D");
