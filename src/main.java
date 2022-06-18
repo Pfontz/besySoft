@@ -1,7 +1,5 @@
 import java.util.*;
 
-import TiendaDeProductos;
-
 public class main{
 
 	public static void main(String[] args) {
@@ -74,10 +72,13 @@ public class main{
 					break;
 				case("S"):
 					System.out.println("cerrando...");
+					in.close();
 					System.exit(0);
 					break;
 				default:
+					in.close();
 					throw new RuntimeException("opcion invalida"); // termina la aplicacion
+					
 			}
 		}
 	}
