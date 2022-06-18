@@ -71,7 +71,14 @@ public class main{
 				case("C"):
 					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
 					System.out.println("buscar articulo (codigo, nombre)");
-					String articulo = in.nextLine();			
+					String articulo = in.nextLine();
+					try {
+						int codigo = Integer.parseInt(articulo);
+						T.productSearch(codigo);
+						
+					} catch (NumberFormatException ex) {
+						T.productSearch(articulo);
+					}
 					break;
 				case("D"):
 					System.out.println("ha elegido opcion D");
