@@ -82,12 +82,11 @@ public class main{
 					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
 					System.out.println("buscar articulo (codigo, nombre)");
 					String articulo = in.nextLine();
+					List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(5);
 					try {
 						int codigo = Integer.parseInt(articulo);
-						T.productSearch(codigo);
-		
-		
-		
+						listaProds.add(T.productSearch(codigo));						
+						T.newSale(listaProds, vendedores.get(ven));
 					} catch (NumberFormatException ex) {
 						T.productSearch(articulo);
 					}

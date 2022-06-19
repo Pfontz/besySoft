@@ -27,7 +27,7 @@ public class TiendaDeProductos {
 		return;
 	}
 	
-	public void newSale(Product[] prod, Seller sel) {
+	public void newSale(List<Product> prod, Seller sel) {
 		Sale nSale = new Sale(sel,prod);
 		this.sales.add(nSale);
 	}
@@ -40,8 +40,8 @@ public class TiendaDeProductos {
 		int prodsVendidos=0;
 		for(int i=0;i<this.sales.size();++i) {
 			if(this.sales.get(i).sel==ven) {
-				for(int j=0;j<this.sales.get(i).prods.length;++j) {
-					impVentas+=this.sales.get(i).prods[j].price;
+				for(int j=0; j<this.sales.get(i).prods.size(); ++j) {
+					impVentas+=this.sales.get(i).prods.get(j).price;
 					prodsVendidos++;
 				}
 			}
@@ -127,12 +127,12 @@ public class TiendaDeProductos {
 	
 	static class Sale{//class to define a sale
 		Seller sel;
-		Product[] prods;
+		List<Product> prods;
 		
 		//class constructor
 		Sale(){};
 		
-		Sale(Seller sell, Product[] prs){
+		Sale(Seller sell, List<Product> prs){
 			this.sel = sell; // copia
 			this.prods = prs; //copia
 		}
