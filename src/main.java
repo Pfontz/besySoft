@@ -70,15 +70,18 @@ public class main{
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
 					}
-					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, income);					
+					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, income);
+					T.storeSeller(nuevo_vend);
 				break;
 				case("C"):
-					System.out.println("seleccion vendedor: ");
-					List<TiendaDeProductos.Seller> vendedores = T.sellers();
+					System.out.println("seleccione vendedor: ");
+					List<TiendaDeProductos.Seller> vendedores = T.showSellers(); // TODO:la lista puede ser vacia si no hay vendedores cargados
 					for(int i=0; i<vendedores.size(); ++i) {
-						System.out.println(vendedores.get(i).name + "(" + (i+1) + ")");
+						System.out.println(vendedores.get(0).name + "(" + (i+1) + ")"); 
+						//TODO:corregir lista vacia
 					}
-					int ven = in.nextInt(); // vendedor a asociar venta
+					String ven = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
+					System.out.println(ven);
 					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
 					System.out.println("buscar articulo (codigo, nombre)");
 					String articulo = in.nextLine();
@@ -86,16 +89,56 @@ public class main{
 					try {
 						int codigo = Integer.parseInt(articulo);
 						listaProds.add(T.productSearch(codigo));						
-						T.newSale(listaProds, vendedores.get(ven));
+						T.newSale(listaProds, vendedores.get(Integer.parseInt(ven)));
 					} catch (NumberFormatException ex) {
 						T.productSearch(articulo);
 					}
-					break;
+				break;
 				case("D"):
-					System.out.println("ha elegido opcion D");
+					System.out.println("buscar producto D");
+					System.out.println("buscar producto por codigo (a)");
+					System.out.println("buscar producto por nombre (b)");
+					System.out.println("buscar producto categoria (c)");
+					char opc = in.nextLine().toLowerCase().charAt(0);
+					switch(opc) {
+						case('a'):
+							System.out.println("ingrese codigo de producto");
+							int code = Integer.parseInt(in.nextLine());
+							TiendaDeProductos.Product aProducto = T.productSearch(code);
+							System.out.println("codigo: " + aProducto.code);
+							System.out.println("nombre: " + aProducto.name);
+							System.out.println("precio: " + aProducto.price);
+							System.out.println("categoria: " + aProducto.category);							
+						break;
+						case('b'):
+							System.out.println("ingrese nombre de producto");
+							String nomProd = in.nextLine();
+							TiendaDeProductos.Product bProducto = T.productSearch(nomProd);
+							System.out.println("codigo: " + bProducto.code);
+							System.out.println("nombre: " + bProducto.name);
+							System.out.println("precio: " + bProducto.price);
+							System.out.println("categoria: " + bProducto.category);	
+						break;
+						case('c'):
+							System.out.println("ingrese categoria de producto");
+							char catProd = in.nextLine().toUpperCase().charAt(0);
+							List<TiendaDeProductos.Product> cProducto = T.productSearch(catProd);
+							for(int i=0; i<cProducto.size();++i) {
+								System.out.println("codigo: " + cProducto.get(i).code); 
+								System.out.println("nombre: " + cProducto.get(i).name);
+								System.out.println("precio: " + cProducto.get(i).price);
+								System.out.println("categoria: " + cProducto.get(i).category);
+								System.out.println();
+							}
+						break;
+						default:
+							in.close();
+							throw new RuntimeException("opcion invalida"); // termina la aplicacion							
+					}
 				break;
 				case("E"):
-					System.out.println("ha elegido opcion E");
+					System.out.println("calcular comision E");
+					
 				break;
 				case("S"):
 					System.out.println("cerrando...");

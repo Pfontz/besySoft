@@ -88,7 +88,7 @@ public class TiendaDeProductos {
 	}
 	
 	//aux:
-	public List<Seller> sellers(){
+	public List<Seller> showSellers(){
 		return this.sellers;
 	}
 	
