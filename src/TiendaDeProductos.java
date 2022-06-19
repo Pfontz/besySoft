@@ -34,6 +34,8 @@ public class TiendaDeProductos {
 	
 	public double commision(Seller ven) {
 		double comm;
+		double five_percent = 0.05;
+		double ten_percent = 0.10;
 		int impVentas=0;
 		int prodsVendidos=0;
 		for(int i=0;i<this.sales.size();++i) {
@@ -45,9 +47,9 @@ public class TiendaDeProductos {
 			}
 		}
 		if(prodsVendidos>2) {
-			comm = impVentas * 0.10;
+			comm = impVentas * ten_percent;
 		}else {
-			comm = impVentas * 0.05;
+			comm = impVentas * five_percent;
 		}
 		return comm;
 	}
@@ -85,6 +87,10 @@ public class TiendaDeProductos {
 		return resProd;
 	}
 	
+	//aux:
+	public List<Seller> sellers(){
+		return this.sellers;
+	}
 	
 	//included data types:
 	static class Seller{//class to define Seller data type
@@ -133,9 +139,9 @@ public class TiendaDeProductos {
 	}
 	
 	
-	private ArrayList<Seller> sellers; //sellers data structure
-	private ArrayList<Product> prods; //products data structure
-	private ArrayList<Sale> sales; //sales data structure 
+	private List<Seller> sellers; //sellers data structure
+	private List<Product> prods; //products data structure
+	private List<Sale> sales; //sales data structure 
 	
 	
 }

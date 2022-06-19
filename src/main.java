@@ -27,7 +27,7 @@ public class main{
 			Scanner in = new Scanner(System.in);
 			String op = in.nextLine();
 			op = op.toUpperCase();
-			//System.out.println(op);
+			//SyQstem.out.println(op);
 			switch(op) {
 				case("A"):
 					System.out.println("ingrese nombre de producto a crear");
@@ -35,24 +35,27 @@ public class main{
 					System.out.println(";");
 					System.out.println("ingrese precio");
 					String precio = in.nextLine();
-					 try{
-				            int price = Integer.parseInt(precio);				  
-				            System.out.println(price);
-					 }
-				     catch (NumberFormatException ex){
-				    	 ex.printStackTrace();
-				     }
+					try{
+						int price = Integer.parseInt(precio);				  
+						System.out.println(price);
+					}
+					catch (NumberFormatException ex){
+						ex.printStackTrace();
+					}
 					System.out.println(";");
 					System.out.println("ingrese categoria");
 					String cat = in.nextLine();
-					 try{
-				            char ch = cat.charAt(0);
-					 }
-				     catch (Exception ex){
-				    	 ex.printStackTrace();
-				     }
-					 TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(211, prod, 23, 'A');
-					 T.storeProduct(nuevo_prod);
+					char ch='x';
+					try{
+						ch = cat.charAt(0);
+					}
+					catch (Exception ex){
+						ex.printStackTrace();
+					}
+					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(211, prod, 23, ch);
+					T.storeProduct(nuevo_prod);
+					//System.out.println("la categoria es: ");
+					//System.out.println(T.productSearch(211).category);
 					break;
 				case("B"):		
 					System.out.println("ingrese nombre nuevo vendedor");
@@ -60,44 +63,52 @@ public class main{
 					System.out.println(";");
 					System.out.println("ingrese remuneracion");
 					String incom = in.nextLine();
+					int income=0;
 					try{
-			            int income = Integer.parseInt(incom);				  
+						income = Integer.parseInt(incom);				  
 					}
-				    catch (NumberFormatException ex){
-				    	ex.printStackTrace();
-				    }
-					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, 1234);					
-					break;
+					catch (NumberFormatException ex){
+						ex.printStackTrace();
+					}
+					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, income);					
+				break;
 				case("C"):
+					System.out.println("seleccion vendedor: ");
+					List<TiendaDeProductos.Seller> vendedores = T.sellers();
+					for(int i=0; i<vendedores.size(); ++i) {
+						System.out.println(vendedores.get(i).name + "(" + (i+1) + ")");
+					}
+					int ven = in.nextInt(); // vendedor a asociar venta
 					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
 					System.out.println("buscar articulo (codigo, nombre)");
 					String articulo = in.nextLine();
 					try {
 						int codigo = Integer.parseInt(articulo);
 						T.productSearch(codigo);
-						
+		
+		
+		
 					} catch (NumberFormatException ex) {
 						T.productSearch(articulo);
 					}
 					break;
 				case("D"):
 					System.out.println("ha elegido opcion D");
-					break;
+				break;
 				case("E"):
 					System.out.println("ha elegido opcion E");
-					break;
+				break;
 				case("S"):
 					System.out.println("cerrando...");
 					in.close();
 					System.exit(0);
-					break;
+				break;
 				default:
 					in.close();
-					throw new RuntimeException("opcion invalida"); // termina la aplicacion
-					
+					throw new RuntimeException("opcion invalida"); // termina la aplicacion	
 			}
 		}
 	}
 }	
-	
+
 
