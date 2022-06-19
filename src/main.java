@@ -7,23 +7,21 @@ public class main{
 		TiendaDeProductos T = new TiendaDeProductos();
 		while(true) {
 			System.out.println("Tienda de productos APP");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("menu de opciones");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("nuevo producto (A)");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("nuevo vendedor (B)");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("nueva venta (C)");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("buscar producto (D)");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("calcular comision por vendedor (E)");
-			System.out.println(";");
+			System.out.println();
 			System.out.println("salir (S)");
-			System.out.println(";");
-			System.out.println(";");
-			System.out.println("seleccione opcion");
+			System.out.println();
 			Scanner in = new Scanner(System.in);
 			String op = in.nextLine();
 			op = op.toUpperCase();
@@ -31,18 +29,17 @@ public class main{
 			switch(op) {
 				case("A"):
 					System.out.println("ingrese nombre de producto a crear");
-					String prod = in.nextLine();
-					System.out.println(";");
+					String prod = in.nextLine();			
 					System.out.println("ingrese precio");
 					String precio = in.nextLine();
+					int price=0;
 					try{
-						int price = Integer.parseInt(precio);				  
+						price = Integer.parseInt(precio);				  
 						System.out.println(price);
 					}
 					catch (NumberFormatException ex){
 						ex.printStackTrace();
 					}
-					System.out.println(";");
 					System.out.println("ingrese categoria");
 					String cat = in.nextLine();
 					char ch='x';
@@ -52,15 +49,13 @@ public class main{
 					catch (Exception ex){
 						ex.printStackTrace();
 					}
-					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(211, prod, 23, ch);
+					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(211, prod, price, ch); //TODO:generar codigo aut
 					T.storeProduct(nuevo_prod);
-					//System.out.println("la categoria es: ");
-					//System.out.println(T.productSearch(211).category);
+					System.out.println("producto creado");
 					break;
 				case("B"):		
 					System.out.println("ingrese nombre nuevo vendedor");
 					String vend = in.nextLine();
-					System.out.println(";");
 					System.out.println("ingrese remuneracion");
 					String incom = in.nextLine();
 					int income=0;
@@ -146,8 +141,9 @@ public class main{
 					System.exit(0);
 				break;
 				default:
-					in.close();
-					throw new RuntimeException("opcion invalida"); // termina la aplicacion	
+					System.out.println("opcion invalida - eliga opcion correcta");
+					System.out.println();
+						
 			}
 		}
 	}
