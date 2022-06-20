@@ -6,6 +6,7 @@ public class main{
 
 		TiendaDeProductos T = new TiendaDeProductos();
 		List<TiendaDeProductos.Seller> vendedores = T.showSellers(); // TODO:la lista puede ser vacia si no hay vendedores cargados
+		List<TiendaDeProductos.Product> productos = T.showProducts(); // TODO:la lista puede ser vacia si no hay productos cargados
 		while(true) {
 			System.out.println("Tienda de productos APP");
 			System.out.println();
@@ -63,17 +64,6 @@ public class main{
 					}
 					System.out.println("ingrese categoria");
 					String cat = in.nextLine(); //puede ser cualquier string para este caso practico
-					/*while(true) {
-						try{
-							ch = cat.charAt(0);
-							break;
-						}
-						catch (Exception ex){
-							System.out.println("Error tipo dato, introduzca una categoria valida");
-							cat = in.nextLine();
-							ch = cat.charAt(0);
-						}
-					}*/
 					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(cod_n, prod, price, cat);
 					T.storeProduct(nuevo_prod);
 					System.out.println("producto creado");
@@ -87,8 +77,8 @@ public class main{
 							cod_v = Integer.parseInt(codv);
 							while(T.isSeller(cod_v)) { 
 								System.out.println("codigo existente, elija otro codigo");
-								cod_p = in.nextLine();
-								cod_n = Integer.parseInt(cod_p);
+								codv = in.nextLine();
+								cod_v = Integer.parseInt(codv); 
 							}
 							break;
 						}
@@ -112,28 +102,80 @@ public class main{
 							incom = in.nextLine();
 						}
 					}
-					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, income);
+					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(cod_v, vend, income);
 					T.storeSeller(nuevo_vend);
 				break;
 				case("C"):
-					System.out.println("seleccione vendedor: ");
-					for(int i=0; i<vendedores.size(); ++i) {
-						System.out.println(vendedores.get(i).name + "(" + (i+1) + ")"); 
-						//TODO:corregir lista vacia
-					}
-					String ven = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
-					System.out.println(ven);
-					System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
-					System.out.println("buscar articulo (codigo, nombre)");
-					String articulo = in.nextLine();
-					List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(5);
-					try {
-						int codigo = Integer.parseInt(articulo);
-						listaProds.add(T.productSearch(codigo));						
-						T.newSale(listaProds, vendedores.get(Integer.parseInt(ven)));
-					} catch (NumberFormatException ex) {
-						listaProds.add(T.productSearch(articulo));
-						T.newSale(listaProds, vendedores.get(Integer.parseInt(ven)));
+					if(!vendedores.isEmpty()) {
+						if(!T.emptyProducts()) {
+							System.out.println("seleccione vendedor: ");
+							for(int i=0; i<vendedores.size(); ++i) {
+								System.out.println(vendedores.get(i).name + "(cod: " + vendedores.get(i).code + ")"); 
+							}
+							String ven = in.nextLine();
+							int ven_n;
+							while(true) {
+								try {
+									ven_n = Integer.parseInt(ven);
+									break;
+								}catch (NumberFormatException ex){
+									System.out.println("codigo vendedor incorrecto");
+									ven = in.nextLine();
+								}
+							}
+							while(!T.isSeller(ven_n)) {
+								System.out.println("codigo vendedor incorrecto");
+								ven = in.nextLine();
+								ven_n = Integer.parseInt(ven);
+							}
+							System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
+							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(5); //TODO
+							System.out.println("escriba 'listar' para ver todos los articulos o 'seleccionar' para seleccionar articulo (por codigo o nombre)");
+							String opcion = in.nextLine().toLowerCase();
+							switch(opcion) {
+							case("seleccionar"):
+								System.out.println("indique articulo (codigo o nombre)");
+								String articulo = in.nextLine();
+								try {
+									int codigo = Integer.parseInt(articulo);
+									while(!(T.productSearch(codigo).code==codigo)) { //no existe el articulo a buscar
+										System.out.println("codigo inexistente");
+										articulo = in.nextLine();
+										codigo = Integer.parseInt(articulo);
+									}
+									listaProds.add(T.productSearch(codigo));						
+									T.newSale(listaProds, vendedores.get(ven_n));
+								} catch (NumberFormatException ex) {
+									listaProds.add(T.productSearch(articulo));
+									T.newSale(listaProds, vendedores.get(Integer.parseInt(ven)));
+								}
+							case("listar"):
+								for(int i=0;i<productos.size();++i) { // listar productos
+									System.out.println(productos.get(i).name + "(cod:" + productos.get(i).code + ")");
+								}
+								while(true) {
+									String artic = in.nextLine();
+									try {
+										int art_n = Integer.parseInt(artic);
+										if(!(T.productSearch(art_n).code==art_n)) {
+											System.out.println("codigo inexistente, introduzca codigo correcto:");
+										}else {
+											listaProds.add(T.productSearch(art_n));
+											break;
+										}
+									} catch (NumberFormatException ex) {
+										System.out.println("dato incorrecto, introduzca codigo correcto:");	
+									}	
+								}
+								T.newSale(listaProds, vendedores.get(ven_n));
+							default:
+								System.out.println("opcion incorrecta");
+							}
+						}else {
+							System.out.println("no existen productos");
+						}
+					}else {
+						System.out.println("no existen vendedores");
 					}
 				break;
 				case("D"):
@@ -179,16 +221,19 @@ public class main{
 					}
 				break;
 				case("E"):
-					System.out.println("seleccione vendedor: ");
-					List<TiendaDeProductos.Seller> vends = T.showSellers(); // TODO:la lista puede ser vacia si no hay vendedores cargados
-					for(int i=0; i<vends.size(); ++i) {
-						System.out.println(vends.get(i).name + "(" + (i+1) + ")"); 
-						//TODO:corregir lista vacia
+					if(!T.emptySales()) {
+						System.out.println("seleccione vendedor: ");
+						List<TiendaDeProductos.Seller> vends = T.showSellers(); //si existen ventas almacenadas => existen vendedores (lista no puede ser vacia)
+						for(int i=0; i<vends.size(); ++i) {
+							System.out.println(vends.get(i).name + "(" + (i) + ")"); 
+						}
+						String vended = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
+						TiendaDeProductos.Seller sell = vendedores.get(Integer.parseInt(vended));
+						double comision = T.commision(sell);
+						System.out.println(comision);
+					}else {
+						System.out.println("no existen ventas registradas");
 					}
-					String vended = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
-					TiendaDeProductos.Seller sell = vendedores.get(Integer.parseInt(vended));
-					double comision = T.commision(sell);
-					System.out.println(comision);					
 				break;
 				case("S"):
 					System.out.println("cerrando...");

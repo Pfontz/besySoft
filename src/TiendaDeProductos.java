@@ -102,6 +102,24 @@ public class TiendaDeProductos {
 		return false;
 	}
 	
+	public boolean emptyProducts() {
+		if(this.prods.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean emptySales() {
+		if(this.sales.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public List<Product> showProducts(){
+		return this.prods;
+	}
+	
 	//included data types:
 	static class Seller{//class to define Seller data type
 			int code;
