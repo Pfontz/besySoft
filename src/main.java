@@ -144,8 +144,8 @@ public class main{
 							}
 						break;
 						default:
-							in.close();
-							throw new RuntimeException("opcion invalida"); // termina la aplicacion							
+							System.out.println("opcion invalida"); // vuelve al menu principal
+							System.out.println();
 					}
 				break;
 				case("E"):
