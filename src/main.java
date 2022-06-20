@@ -176,23 +176,28 @@ public class main{
 									j=j-1;
 								}
 								if(j>-1 && j<5) {
-									System.out.println("desea seguir agregando articulos?(s/n)");
-									String resp = in.nextLine().toLowerCase();
+									System.out.println("desea seguir agregando articulos?(SI/NO)");
+									String resp = in.nextLine().toUpperCase();
 									while(true) {
 										switch(resp) {
-										case("s"):
+										case("SI"):
 										break;
-										case("n"):
+										case("NO"):
 										j=5;
 										break;
 										default:
-											System.out.println("opciones validas: s/n");
-											resp = in.nextLine().toLowerCase();
+											while(!(resp.equals("SI")) && !(resp.equals("NO"))) {							
+												System.out.println("opciones validas: SI/NO");
+												resp = in.nextLine().toUpperCase();
+											}										
 										}
 										break;
 									}
 								}
-							}	
+							}
+							for(int p=0;p<listaProds.size();++p) {
+								System.out.println(listaProds.get(p).name + "" + listaProds.get(p).code);
+							}
 						}else {
 							System.out.println("no existen productos");
 						}
