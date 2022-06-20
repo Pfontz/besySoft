@@ -5,22 +5,22 @@ public class main{
 	public static void main(String[] args) {
 
 		TiendaDeProductos T = new TiendaDeProductos();
-		List<TiendaDeProductos.Seller> vendedores = T.showSellers(); // TODO:la lista puede ser vacia si no hay vendedores cargados
-		List<TiendaDeProductos.Product> productos = T.showProducts(); // TODO:la lista puede ser vacia si no hay productos cargados
+		List<TiendaDeProductos.Seller> vendedores = T.showSellers(); 
+		List<TiendaDeProductos.Product> productos = T.showProducts(); 
 		while(true) {
 			System.out.println("Tienda de productos APP");
 			System.out.println();
 			System.out.println("menu de opciones");
 			System.out.println();
-			System.out.println("nuevo producto (A)");
+			System.out.println("nuevo producto (1)");
 			System.out.println();
-			System.out.println("nuevo vendedor (B)");
+			System.out.println("nuevo vendedor (2)");
 			System.out.println();
-			System.out.println("nueva venta (C)");
+			System.out.println("nueva venta (3)");
 			System.out.println();
-			System.out.println("buscar producto (D)");
+			System.out.println("buscar producto (4)");
 			System.out.println();
-			System.out.println("calcular comision por vendedor (E)");
+			System.out.println("calcular comision por vendedor (5)");
 			System.out.println();
 			System.out.println("salir (S)");
 			System.out.println();
@@ -28,7 +28,7 @@ public class main{
 			String op = in.nextLine();
 			op = op.toUpperCase();
 			switch(op) {
-				case("A"):
+				case("1"):
 					System.out.println("ingrese codigo de producto a crear");
 					String cod_p = in.nextLine();
 					int cod_n;
@@ -68,7 +68,7 @@ public class main{
 					T.storeProduct(nuevo_prod);
 					System.out.println("producto creado");
 					break;
-				case("B"):
+				case("2"):
 					System.out.println("ingrese codigo de nuevo vendedor");
 					String codv = in.nextLine();
 					int cod_v;
@@ -105,7 +105,7 @@ public class main{
 					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(cod_v, vend, income);
 					T.storeSeller(nuevo_vend);
 				break;
-				case("C"):
+				case("3"):
 					if(!vendedores.isEmpty()) {
 						if(!T.emptyProducts()) {
 							System.out.println("seleccione vendedor: ");
@@ -186,7 +186,7 @@ public class main{
 										j=5;
 										break;
 										default:
-											while(!(resp.equals("SI")) && !(resp.equals("NO"))) {							
+											while(!((resp.equals("SI")) || (resp.equals("NO")))) {							
 												System.out.println("opciones validas: SI/NO");
 												resp = in.nextLine().toUpperCase();
 											}										
@@ -205,7 +205,7 @@ public class main{
 						System.out.println("no existen vendedores");
 					}
 				break;
-				case("D"):
+				case("4"):
 					System.out.println("buscar producto D");
 					System.out.println("buscar producto por codigo (a)");
 					System.out.println("buscar producto por nombre (b)");
@@ -266,17 +266,25 @@ public class main{
 							System.out.println();
 					}
 				break;
-				case("E"):
+				case("5"):
 					if(!T.emptySales()) {
 						System.out.println("seleccione vendedor: ");
-						List<TiendaDeProductos.Seller> vends = T.showSellers(); //si existen ventas almacenadas => existen vendedores (lista no puede ser vacia)
-						for(int i=0; i<vends.size(); ++i) {
-							System.out.println(vends.get(i).name + "(" + (i) + ")"); 
+						for(int i=0; i<vendedores.size(); ++i) {
+							System.out.println(vendedores.get(i).name + "(cod:" + vendedores.get(i).code + ")"); 
 						}
-						String vended = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
-						TiendaDeProductos.Seller sell = vendedores.get(Integer.parseInt(vended));
-						double comision = T.commision(sell);
-						System.out.println(comision);
+						String vended = in.nextLine();
+						try {
+							int v = Integer.parseInt(vended);
+							if(T.isSeller(v)) {
+								TiendaDeProductos.Seller sell = T.findSeller(v);
+								double comision = T.commision(sell);
+								System.out.println(comision);
+							}else {
+								System.out.print("vendedor no encontrado");
+							}
+						} catch (NumberFormatException ex) {
+							System.out.println("tipo codigo numerico ingresado incorrecto");
+						}
 					}else {
 						System.out.println("no existen ventas registradas");
 					}
