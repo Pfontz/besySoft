@@ -80,7 +80,7 @@ public class TiendaDeProductos {
 	public Product productSearch(String art) {
 		Product resProd = new Product();
 		for(int i=0; i<this.prods.size();++i) {
-			if(this.prods.get(i).name==art) {
+			if(this.prods.get(i).name.equals(art)) {
 				resProd = this.prods.get(i);
 			}
 		}
@@ -142,6 +142,8 @@ public class TiendaDeProductos {
 	private List<Seller> sellers; //sellers data structure
 	private List<Product> prods; //products data structure
 	private List<Sale> sales; //sales data structure 
+	
+	
 	
 	
 }
