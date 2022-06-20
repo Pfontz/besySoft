@@ -129,11 +129,11 @@ public class main{
 								ven_n = Integer.parseInt(ven);
 							}
 							System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
-							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(5); //TODO
 							System.out.println("escriba 'listar' para ver todos los articulos o 'seleccionar' para seleccionar articulo (por codigo o nombre)");
 							String opcion = in.nextLine().toLowerCase();
+							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(); //TODO
 							switch(opcion) {
-							case("seleccionar"):
+							case("seleccionar"):						
 								System.out.println("indique articulo (codigo o nombre)");
 								String articulo = in.nextLine();
 								try {
@@ -143,12 +143,13 @@ public class main{
 										articulo = in.nextLine();
 										codigo = Integer.parseInt(articulo);
 									}
-									listaProds.add(T.productSearch(codigo));						
-									T.newSale(listaProds, vendedores.get(ven_n));
+									listaProds.add(T.productSearch(codigo));
+									System.out.println(listaProds.get(0).code);
 								} catch (NumberFormatException ex) {
 									listaProds.add(T.productSearch(articulo));
-									T.newSale(listaProds, vendedores.get(Integer.parseInt(ven)));
 								}
+								T.newSale(listaProds, T.findSeller(ven_n));
+								break;
 							case("listar"):
 								for(int i=0;i<productos.size();++i) { // listar productos
 									System.out.println(productos.get(i).name + "(cod:" + productos.get(i).code + ")");
@@ -167,7 +168,8 @@ public class main{
 										System.out.println("dato incorrecto, introduzca codigo correcto:");	
 									}	
 								}
-								T.newSale(listaProds, vendedores.get(ven_n));
+								T.newSale(listaProds, T.findSeller(ven_n));
+								break;
 							default:
 								System.out.println("opcion incorrecta");
 							}

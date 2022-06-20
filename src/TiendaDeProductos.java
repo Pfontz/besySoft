@@ -120,6 +120,16 @@ public class TiendaDeProductos {
 		return this.prods;
 	}
 	
+	public Seller findSeller(int cod_s) {//pre condition:cod_s in (Sellers.code)
+		Seller res = new Seller();
+		for(int i=0;i<this.sellers.size();++i) {
+			if((this.sellers.get(i).code)==cod_s) {
+				res = this.sellers.get(i);
+			}
+		}
+		return res;
+	}
+	
 	//included data types:
 	static class Seller{//class to define Seller data type
 			int code;
