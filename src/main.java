@@ -26,15 +26,19 @@ public class main{
 			Scanner in = new Scanner(System.in);
 			String op = in.nextLine();
 			op = op.toUpperCase();
-			//SyQstem.out.println(op);
 			switch(op) {
 				case("A"):
 					System.out.println("ingrese codigo de producto a crear");
 					String cod_p = in.nextLine();
-					int cod_n=0;
+					int cod_n;
 					while(true) {
 						try{
-							cod_n = Integer.parseInt(cod_p);				  					
+							cod_n = Integer.parseInt(cod_p);
+							while(T.productSearch(cod_n).code==cod_n) {
+								System.out.println("codigo existente, elija otro codigo");
+								cod_p = in.nextLine();
+								cod_n = Integer.parseInt(cod_p);
+							}
 							break;
 						}
 						catch (NumberFormatException ex){
@@ -46,7 +50,7 @@ public class main{
 					String prod = in.nextLine();			
 					System.out.println("ingrese precio");
 					String precio = in.nextLine();
-					int price=0;
+					int price;
 					while(true) {
 						try{
 							price = Integer.parseInt(precio);				  
@@ -58,15 +62,19 @@ public class main{
 						}
 					}
 					System.out.println("ingrese categoria");
-					String cat = in.nextLine();
-					char ch='x';
-					try{
-						ch = cat.charAt(0);
-					}
-					catch (Exception ex){
-						ex.printStackTrace();
-					}
-					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(cod_n, prod, price, ch); //TODO:generar codigo aut
+					String cat = in.nextLine(); //puede ser cualquier string para este caso practico
+					/*while(true) {
+						try{
+							ch = cat.charAt(0);
+							break;
+						}
+						catch (Exception ex){
+							System.out.println("Error tipo dato, introduzca una categoria valida");
+							cat = in.nextLine();
+							ch = cat.charAt(0);
+						}
+					}*/
+					TiendaDeProductos.Product nuevo_prod = new TiendaDeProductos.Product(cod_n, prod, price, cat);
 					T.storeProduct(nuevo_prod);
 					System.out.println("producto creado");
 					break;
@@ -75,12 +83,16 @@ public class main{
 					String vend = in.nextLine();
 					System.out.println("ingrese remuneracion");
 					String incom = in.nextLine();
-					int income=0;
-					try{
-						income = Integer.parseInt(incom);				  
-					}
-					catch (NumberFormatException ex){
-						ex.printStackTrace();
+					int income;
+					while(true) {
+						try{
+							income = Integer.parseInt(incom);
+							break;
+						}
+						catch (NumberFormatException ex){
+							System.out.println("Error tipo dato, introduzca un numero valido");
+							incom = in.nextLine();
+						}
 					}
 					TiendaDeProductos.Seller nuevo_vend = new TiendaDeProductos.Seller(211, vend, income);
 					T.storeSeller(nuevo_vend);
@@ -88,7 +100,7 @@ public class main{
 				case("C"):
 					System.out.println("seleccione vendedor: ");
 					for(int i=0; i<vendedores.size(); ++i) {
-						System.out.println(vendedores.get(0).name + "(" + (i+1) + ")"); 
+						System.out.println(vendedores.get(i).name + "(" + (i+1) + ")"); 
 						//TODO:corregir lista vacia
 					}
 					String ven = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
@@ -133,8 +145,8 @@ public class main{
 						break;
 						case('c'):
 							System.out.println("ingrese categoria de producto");
-							char catProd = in.nextLine().toUpperCase().charAt(0);
-							List<TiendaDeProductos.Product> cProducto = T.productSearch(catProd);
+							String catProd = in.nextLine();
+							List<TiendaDeProductos.Product> cProducto = T.productSearchC(catProd);
 							for(int i=0; i<cProducto.size();++i) {
 								System.out.println("codigo: " + cProducto.get(i).code); 
 								System.out.println("nombre: " + cProducto.get(i).name);
@@ -152,7 +164,7 @@ public class main{
 					System.out.println("seleccione vendedor: ");
 					List<TiendaDeProductos.Seller> vends = T.showSellers(); // TODO:la lista puede ser vacia si no hay vendedores cargados
 					for(int i=0; i<vends.size(); ++i) {
-						System.out.println(vends.get(0).name + "(" + (i+1) + ")"); 
+						System.out.println(vends.get(i).name + "(" + (i+1) + ")"); 
 						//TODO:corregir lista vacia
 					}
 					String vended = in.nextLine(); // vendedor a asociar venta TODO:corregir valor vacio
