@@ -119,14 +119,18 @@ public class main{
 									ven_n = Integer.parseInt(ven);
 									break;
 								}catch (NumberFormatException ex){
-									System.out.println("codigo vendedor incorrecto");
+									System.out.println("tipo codigo numerico no valido, ingrese codigo numerico");
 									ven = in.nextLine();
 								}
 							}
 							while(!T.isSeller(ven_n)) {
 								System.out.println("codigo vendedor incorrecto");
 								ven = in.nextLine();
-								ven_n = Integer.parseInt(ven);
+								try {
+									ven_n = Integer.parseInt(ven);
+								} catch (NumberFormatException ex){
+									System.out.println("codigo vendedor incorrecto");									
+								}
 							}
 							System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");						
 							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>();
