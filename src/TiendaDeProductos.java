@@ -55,10 +55,10 @@ public class TiendaDeProductos {
 	}
 	
 	//search products by category
-	public ArrayList<Product> productSearchC(String catg) {
-		ArrayList<Product> resProducts = new ArrayList<Product>(); 
+	public List<Product> productSearchC(String catg) {
+		List<Product> resProducts = new ArrayList<Product>(); 
 		for(int i = 0;i<this.prods.size();++i) {
-			if(this.prods.get(i).category==catg) {
+			if(this.prods.get(i).category.equals(catg)) {
 				resProducts.add(this.prods.get(i));
 			}
 		}

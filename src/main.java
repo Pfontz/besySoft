@@ -210,9 +210,9 @@ public class main{
 					System.out.println("buscar producto por codigo (a)");
 					System.out.println("buscar producto por nombre (b)");
 					System.out.println("buscar producto categoria (c)");
-					char opc = in.nextLine().toLowerCase().charAt(0);
+					String opc = in.nextLine().toLowerCase();
 					switch(opc) {
-						case('a'):
+						case("a"):
 							System.out.println("ingrese codigo de producto");
 							int code;
 							try {
@@ -230,7 +230,7 @@ public class main{
 								System.out.println("dato invalido");
 							}
 						break;
-						case('b'):
+						case("b"):
 							System.out.println("ingrese nombre de producto");
 							String nomProd = in.nextLine();
 							try {
@@ -245,7 +245,7 @@ public class main{
 								System.out.println("producto no encontrado");
 							}
 						break;
-						case('c'):
+						case("c"):
 							System.out.println("ingrese categoria de producto");
 							String catProd = in.nextLine();
 							List<TiendaDeProductos.Product> cProducto = T.productSearchC(catProd);
