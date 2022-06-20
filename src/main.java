@@ -128,51 +128,71 @@ public class main{
 								ven = in.nextLine();
 								ven_n = Integer.parseInt(ven);
 							}
-							System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");
-							System.out.println("escriba 'listar' para ver todos los articulos o 'seleccionar' para seleccionar articulo (por codigo o nombre)");
-							String opcion = in.nextLine().toLowerCase();
-							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>(); //TODO
-							switch(opcion) {
-							case("seleccionar"):						
-								System.out.println("indique articulo (codigo o nombre)");
-								String articulo = in.nextLine();
-								try {
-									int codigo = Integer.parseInt(articulo);
-									while(!(T.productSearch(codigo).code==codigo)) { //no existe el articulo a buscar
-										System.out.println("codigo inexistente");
-										articulo = in.nextLine();
-										codigo = Integer.parseInt(articulo);
-									}
-									listaProds.add(T.productSearch(codigo));
-									System.out.println(listaProds.get(0).code);
-								} catch (NumberFormatException ex) {
-									listaProds.add(T.productSearch(articulo));
-								}
-								T.newSale(listaProds, T.findSeller(ven_n));
-								break;
-							case("listar"):
-								for(int i=0;i<productos.size();++i) { // listar productos
-									System.out.println(productos.get(i).name + "(cod:" + productos.get(i).code + ")");
-								}
-								while(true) {
-									String artic = in.nextLine();
+							System.out.println("registar nueva venta - seleccione a continuacion articulos a registrar (max 5)");						
+							List<TiendaDeProductos.Product> listaProds = new ArrayList<TiendaDeProductos.Product>();
+							for(int j=0;j<5;++j) {
+								System.out.println("escriba 'listar' para ver todos los articulos o 'seleccionar' para seleccionar articulo (por codigo o nombre)");
+								String opcion = in.nextLine().toLowerCase();
+								switch(opcion) {
+								case("seleccionar"):						
+									System.out.println("indique articulo (codigo o nombre)");
+									String articulo = in.nextLine();
 									try {
-										int art_n = Integer.parseInt(artic);
-										if(!(T.productSearch(art_n).code==art_n)) {
-											System.out.println("codigo inexistente, introduzca codigo correcto:");
-										}else {
-											listaProds.add(T.productSearch(art_n));
-											break;
+										int codigo = Integer.parseInt(articulo);
+										while(!(T.productSearch(codigo).code==codigo)) { //no existe el articulo a buscar
+											System.out.println("codigo inexistente");
+											articulo = in.nextLine();
+											codigo = Integer.parseInt(articulo);
 										}
+										listaProds.add(T.productSearch(codigo));
+										System.out.println(listaProds.get(0).code);
 									} catch (NumberFormatException ex) {
-										System.out.println("dato incorrecto, introduzca codigo correcto:");	
-									}	
+										listaProds.add(T.productSearch(articulo));
+									}
+									T.newSale(listaProds, T.findSeller(ven_n));
+									break;
+								case("listar"):
+									for(int i=0;i<productos.size();++i) { // listar productos
+										System.out.println(productos.get(i).name + "(cod:" + productos.get(i).code + ")");
+									}
+									while(true) {
+										String artic = in.nextLine();
+										try {
+											int art_n = Integer.parseInt(artic);
+											if(!(T.productSearch(art_n).code==art_n)) {
+												System.out.println("codigo inexistente, introduzca codigo correcto:");
+											}else {
+												listaProds.add(T.productSearch(art_n));
+												break;
+											}
+										} catch (NumberFormatException ex) {
+											System.out.println("dato incorrecto, introduzca codigo correcto:");	
+										}	
+									}
+									T.newSale(listaProds, T.findSeller(ven_n));
+									break;
+								default:
+									System.out.println("opcion incorrecta");
+									j=j-1;
 								}
-								T.newSale(listaProds, T.findSeller(ven_n));
-								break;
-							default:
-								System.out.println("opcion incorrecta");
-							}
+								if(j>-1 && j<5) {
+									System.out.println("desea seguir agregando articulos?(s/n)");
+									String resp = in.nextLine().toLowerCase();
+									while(true) {
+										switch(resp) {
+										case("s"):
+										break;
+										case("n"):
+										j=5;
+										break;
+										default:
+											System.out.println("opciones validas: s/n");
+											resp = in.nextLine().toLowerCase();
+										}
+										break;
+									}
+								}
+							}	
 						}else {
 							System.out.println("no existen productos");
 						}
