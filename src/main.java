@@ -34,7 +34,7 @@ public class main{
 					while(true) {
 						try{
 							cod_n = Integer.parseInt(cod_p);
-							while(T.productSearch(cod_n).code==cod_n) {
+							while(T.productSearch(cod_n).code==cod_n) { //TODO:que devuelve productsearch si el producto con ese codigo no existe?
 								System.out.println("codigo existente, elija otro codigo");
 								cod_p = in.nextLine();
 								cod_n = Integer.parseInt(cod_p);
@@ -78,7 +78,25 @@ public class main{
 					T.storeProduct(nuevo_prod);
 					System.out.println("producto creado");
 					break;
-				case("B"):		
+				case("B"):
+					System.out.println("ingrese codigo de nuevo vendedor");
+					String codv = in.nextLine();
+					int cod_v;
+					while(true) {
+						try{
+							cod_v = Integer.parseInt(codv);
+							while(T.isSeller(cod_v)) { 
+								System.out.println("codigo existente, elija otro codigo");
+								cod_p = in.nextLine();
+								cod_n = Integer.parseInt(cod_p);
+							}
+							break;
+						}
+						catch (NumberFormatException ex){
+							System.out.println("Error tipo dato, introduzca un numero valido");
+							codv = in.nextLine();
+						}
+					}								
 					System.out.println("ingrese nombre nuevo vendedor");
 					String vend = in.nextLine();
 					System.out.println("ingrese remuneracion");

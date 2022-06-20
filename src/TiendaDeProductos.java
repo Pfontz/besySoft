@@ -92,6 +92,16 @@ public class TiendaDeProductos {
 		return this.sellers;
 	}
 	
+	public boolean isSeller(int cod_v) {
+		List<Seller> sellers = this.showSellers();
+		for(int i=0;i<sellers.size();++i) {
+			if(sellers.get(i).code==cod_v) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	//included data types:
 	static class Seller{//class to define Seller data type
 			int code;
