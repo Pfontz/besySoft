@@ -214,32 +214,51 @@ public class main{
 					switch(opc) {
 						case('a'):
 							System.out.println("ingrese codigo de producto");
-							int code = Integer.parseInt(in.nextLine());
-							TiendaDeProductos.Product aProducto = T.productSearch(code);
-							System.out.println("codigo: " + aProducto.code);
-							System.out.println("nombre: " + aProducto.name);
-							System.out.println("precio: " + aProducto.price);
-							System.out.println("categoria: " + aProducto.category);							
+							int code;
+							try {
+								code = Integer.parseInt(in.nextLine());
+								if(T.productSearch(code).code==code) {
+									TiendaDeProductos.Product aProducto = T.productSearch(code);
+									System.out.println("codigo: " + aProducto.code);
+									System.out.println("nombre: " + aProducto.name);
+									System.out.println("precio: " + aProducto.price);
+									System.out.println("categoria: " + aProducto.category);
+								} else {
+									System.out.print("producto no encontrado");
+								}
+							} catch (NumberFormatException ex) {
+								System.out.println("dato invalido");
+							}
 						break;
 						case('b'):
 							System.out.println("ingrese nombre de producto");
 							String nomProd = in.nextLine();
-							TiendaDeProductos.Product bProducto = T.productSearch(nomProd);
-							System.out.println("codigo: " + bProducto.code);
-							System.out.println("nombre: " + bProducto.name);
-							System.out.println("precio: " + bProducto.price);
-							System.out.println("categoria: " + bProducto.category);	
+							try {
+								if(T.productSearch(nomProd).name.equals(nomProd)) {
+									TiendaDeProductos.Product bProducto = T.productSearch(nomProd);
+									System.out.println("codigo: " + bProducto.code);
+									System.out.println("nombre: " + bProducto.name);
+									System.out.println("precio: " + bProducto.price);
+									System.out.println("categoria: " + bProducto.category);
+								}	
+							}catch (NullPointerException ex) {
+								System.out.println("producto no encontrado");
+							}
 						break;
 						case('c'):
 							System.out.println("ingrese categoria de producto");
 							String catProd = in.nextLine();
 							List<TiendaDeProductos.Product> cProducto = T.productSearchC(catProd);
-							for(int i=0; i<cProducto.size();++i) {
-								System.out.println("codigo: " + cProducto.get(i).code); 
-								System.out.println("nombre: " + cProducto.get(i).name);
-								System.out.println("precio: " + cProducto.get(i).price);
-								System.out.println("categoria: " + cProducto.get(i).category);
-								System.out.println();
+							if(cProducto.size()>0) {
+								for(int i=0; i<cProducto.size();++i) {
+									System.out.println("codigo: " + cProducto.get(i).code); 
+									System.out.println("nombre: " + cProducto.get(i).name);
+									System.out.println("precio: " + cProducto.get(i).price);
+									System.out.println("categoria: " + cProducto.get(i).category);
+									System.out.println();
+								}
+							}else {
+								System.out.println("no existe categoria");
 							}
 						break;
 						default:
