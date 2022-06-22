@@ -151,9 +151,9 @@ public class main{
 										listaProds.add(T.productSearch(codigo));
 										System.out.println(listaProds.get(0).code);
 									} catch (NumberFormatException ex) {
-										listaProds.add(T.productSearch(articulo));
+										listaProds.add(T.productSearch(articulo));// TODO: BUG, while(no encuentra el articulo: print codig inexistente; entrada por teclado ...)
 									}
-									T.newSale(listaProds, T.findSeller(ven_n));
+									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG
 									break;
 								case("listar"):
 									for(int i=0;i<productos.size();++i) { // listar productos
@@ -173,7 +173,7 @@ public class main{
 											System.out.println("dato incorrecto, introduzca codigo correcto:");	
 										}	
 									}
-									T.newSale(listaProds, T.findSeller(ven_n));
+									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG
 									break;
 								default:
 									System.out.println("opcion incorrecta");
