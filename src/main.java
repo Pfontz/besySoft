@@ -141,19 +141,28 @@ public class main{
 								case("seleccionar"):						
 									System.out.println("indique articulo (codigo o nombre)");
 									String articulo = in.nextLine();
-									try {
-										int codigo = Integer.parseInt(articulo);
-										while(!(T.productSearch(codigo).code==codigo)) { //no existe el articulo a buscar
-											System.out.println("codigo inexistente");
-											articulo = in.nextLine();
-											codigo = Integer.parseInt(articulo);
+									while(true) {
+										try {
+											int codigo = Integer.parseInt(articulo);
+											if(!(T.productSearch(codigo).code==codigo)) { //no existe el articulo a buscar
+												System.out.println("codigo/nombre inexistente, ingrese codigo correcto/nombre:");
+												articulo = in.nextLine();
+												//codigo = Integer.parseInt(articulo);
+											} else {
+												listaProds.add(T.productSearch(codigo));
+												break;
+											}											
+										} catch (NumberFormatException ex) {
+											if(String.valueOf(T.productSearch(articulo).name).equals("null")) { //no existe el articulo a buscar
+												System.out.println("codigo/nombre inexistente, ingrese codigo correcto:");
+												articulo = in.nextLine();
+											} else {
+												listaProds.add(T.productSearch(articulo));
+												break;
+											}
 										}
-										listaProds.add(T.productSearch(codigo));
-										System.out.println(listaProds.get(0).code);
-									} catch (NumberFormatException ex) {
-										listaProds.add(T.productSearch(articulo));// TODO: BUG, while(no encuentra el articulo: print codig inexistente; entrada por teclado ...)
+									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG. va al cierre del for ppal.
 									}
-									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG
 									break;
 								case("listar"):
 									for(int i=0;i<productos.size();++i) { // listar productos
@@ -173,7 +182,7 @@ public class main{
 											System.out.println("dato incorrecto, introduzca codigo correcto:");	
 										}	
 									}
-									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG
+									//T.newSale(listaProds, T.findSeller(ven_n)); // TODO: BUG. va al cierre del for ppal.
 									break;
 								default:
 									System.out.println("opcion incorrecta");
@@ -199,6 +208,7 @@ public class main{
 									}
 								}
 							}
+							T.newSale(listaProds, T.findSeller(ven_n));
 							for(int p=0;p<listaProds.size();++p) {
 								System.out.println(listaProds.get(p).name + "" + listaProds.get(p).code);
 							}
