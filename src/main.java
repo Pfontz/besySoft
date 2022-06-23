@@ -191,21 +191,26 @@ public class main{
 								if(j>-1 && j<5) {
 									System.out.println("desea seguir agregando articulos?(SI/NO)");
 									String resp = in.nextLine().toUpperCase();
-									while(true) {
-										switch(resp) {
-										case("SI"):
-										break;
-										case("NO"):
-										j=5;
-										break;
-										default:
-											while(!((resp.equals("SI")) || (resp.equals("NO")))) {							
-												System.out.println("opciones validas: SI/NO");
-												resp = in.nextLine().toUpperCase();
-											}										
+									switch(resp) {
+									case("SI"):
+									break;
+									case("NO"):
+									j=10;
+									break;
+									default:										
+										while(true) {
+											System.out.println("opciones validas: SI/NO");
+											resp = in.nextLine().toUpperCase();
+											if(resp.equals("SI")) {
+												break;
+											}else {
+												if(resp.equals("NO")) {
+													j=10;
+													break;
+												}
+											}
 										}
-										break;
-									}
+									}																
 								}
 							}
 							T.newSale(listaProds, T.findSeller(ven_n));
@@ -220,7 +225,6 @@ public class main{
 					}
 				break;
 				case("4"):
-					System.out.println("buscar producto D");
 					System.out.println("buscar producto por codigo (a)");
 					System.out.println("buscar producto por nombre (b)");
 					System.out.println("buscar producto categoria (c)");
